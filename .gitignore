@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+.adk/
+.pytest_cache/
+summary.txt
+summary1.txt
