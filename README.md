@@ -40,7 +40,7 @@ The application uses a `.env` file to manage local environment settings. Verify 
 ```env
 # Tells ADK to use Vertex AI instead of Google AI Studio
 GOOGLE_GENAI_USE_VERTEXAI=true
-GOOGLE_CLOUD_PROJECT=lisa-demo-project-1
+GOOGLE_CLOUD_PROJECT=<Your PROJECT ID>
 GOOGLE_CLOUD_LOCATION=us-central1
 
 # Local OTel tracing settings
@@ -63,7 +63,7 @@ To create the Memory Bank, deploy your agent code to Agent Engine:
 
 ```bash
 python -m google.adk.cli deploy agent_engine \
-  --project=lisa-demo-project-1 \
+  --project=<YOUR PROJECT ID> \
   --region=us-central1 \
   --display_name="cr_ds_agent" \
   ./
@@ -71,9 +71,9 @@ python -m google.adk.cli deploy agent_engine \
 
 ### 📝 Capturing the ID
 Once deployment finishes successfully, the CLI output will print your deployed resource path:
-`Deployed to Agent Platform: projects/741251896794/locations/us-central1/reasoningEngines/8973077560640405504`
+`Deployed to Agent Platform: projects/741251896794/locations/us-central1/reasoningEngines/<Reasoning Engine ID>`
 
-Save the Reasoning Engine ID (`8973077560640405504`). This is what we will use to link Cloud Run's long-term memory.
+Save the Reasoning Engine ID. This is what we will use to link Cloud Run's long-term memory.
 
 ---
 
@@ -83,14 +83,14 @@ Now, deploy the application to Cloud Run with the **ADK Web UI** enabled, and li
 
 ```bash
 python -m google.adk.cli deploy cloud_run \
-  --project=lisa-demo-project-1 \
+  --project=<your project id> \
   --region=us-central1 \
   --with_ui \
   --memory_service_uri="agentengine://<YOUR_REASONING_ENGINE_ID>" \
   ./
 ```
 
-*Replace `<YOUR_REASONING_ENGINE_ID>` with your captured ID (e.g., `8973077560640405504`).*
+*Replace `<YOUR_REASONING_ENGINE_ID>` with your captured ID (e.g., `89730xxxxxxxxxx`).*
 
 ---
 
@@ -102,7 +102,7 @@ To enable OTel tracing, simply add the `--trace_to_cloud` and `--otel_to_cloud` 
 
 ```bash
 python -m google.adk.cli deploy cloud_run \
-  --project=lisa-demo-project-1 \
+  --project=<your project id> \
   --region=us-central1 \
   --with_ui \
   --trace_to_cloud \
@@ -121,9 +121,7 @@ Every interaction turn inside the Web UI or via the REST API automatically expor
 
 Once successfully deployed, the CLI will output your live service URL.
 * To launch the **ADK Web UI**, append `/dev-ui/` to your Cloud Run URL:
-  ```text
-  https://adk-default-service-name-741251896794.us-central1.run.app/dev-ui/
-  ```
+
 
 ### 🧠 How Memory Works in the UI:
 1. **Retrieval (`PreloadMemoryTool`):** Before the agent processes any message, it queries your linked Agent Engine Memory Bank for past sessions/preferences matching your user, and proactively injects them into the agent's prompt context.
