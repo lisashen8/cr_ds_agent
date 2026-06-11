@@ -1,4 +1,4 @@
-# Data Science Agent - Cloud Run & ADK Web UI Deployment
+# Stateful Data Agent on Cloud Run with Agent Platform Memory bank service
 
 This repository contains an expert **Data Science Agent** built using the **Google Agent Development Kit (ADK)**. Originally written for Agent Engine, the app has been refactored for **Google Cloud Run** deployment with direct support for the interactive **ADK Web UI** and persistent, long-term memory via **Vertex AI Agent Engine (Reasoning Engine)**.
 
