@@ -10,7 +10,12 @@ from google.adk.tools.bigquery import BigQueryToolset
 from google.adk.tools.preload_memory_tool import PreloadMemoryTool
 import google.auth
 
-PROJECT_ID = "lisa-demo-project-1"
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
+if not PROJECT_ID:
+    raise ValueError(
+        "GOOGLE_CLOUD_PROJECT environment variable is required. "
+        "Set it with: export GOOGLE_CLOUD_PROJECT=<your-project-id>"
+    )
 
 credentials, _ = google.auth.default()
 bq_toolset = BigQueryToolset(credentials_config=BigQueryCredentialsConfig(credentials=credentials))
